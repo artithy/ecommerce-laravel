@@ -6,7 +6,7 @@ use Closure;
 use Exception;
 use Firebase\JWT\JWT;
 use Illuminate\Http\Request;
-use Laravel\Prompts\Key;
+use Firebase\JWT\Key;
 use Symfony\Component\HttpFoundation\Response;
 
 class AuthMiddleWare
@@ -35,12 +35,12 @@ class AuthMiddleWare
             }
             $request->attributes->set('auth_user', [
                 'id' => $decode->id,
-                'name' => $decode->name,
                 'role' => $decode->role,
             ]);
         } catch (Exception $e) {
             return response()->json([
-                'message' => 'Token is invalid'
+                'message' => 'Token is invalid',
+                'error' => $e->getMessage()
             ]);
         }
         return $next($request);

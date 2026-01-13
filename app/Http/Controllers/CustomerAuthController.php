@@ -64,12 +64,12 @@ class CustomerAuthController extends Controller
                 'message' => 'Email does not exist'
             ]);
         }
-        if (Hash::check($request->password, $customer->password)) {
+        if (!Hash::check($request->password, $customer->password)) {
             return response()->json([
                 'message' => 'Password is incorrect',
             ]);
         }
-        $secretKey = env('SECRET__KEY');
+        $secretKey = env('SECRET_KEY');
         $payload = [
             'id' => $customer->id,
             'email' => $customer->email,
@@ -83,6 +83,20 @@ class CustomerAuthController extends Controller
             'message' => 'Customer logged in successfully',
             'customer' => $customer,
             'token' => $jwt,
+        ]);
+    }
+
+    public function me(Request $request)
+    {
+        $auth = $request->attributes->get('auth_user');
+        $customer = Customer::find($auth['id']);
+        if (!$customer) {
+            return response()->json([
+                'message' => 'Customer not found',
+            ]);
+        }
+        return response()->json([
+            'customer' => $customer,
         ]);
     }
 }

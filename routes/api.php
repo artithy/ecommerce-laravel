@@ -10,3 +10,7 @@ Route::get('/user', function (Request $request) {
 
 Route::post('/customer/register', [CustomerAuthController::class, 'register']);
 Route::post('/customer/login', [CustomerAuthController::class, 'login']);
+
+Route::middleware(['auth.jwt', 'role:customer'])->group(function () {
+    Route::get('/me', [CustomerAuthController::class, 'me']);
+});
