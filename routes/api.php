@@ -13,4 +13,5 @@ Route::post('/customer/login', [CustomerAuthController::class, 'login']);
 
 Route::middleware(['auth.jwt', 'role:customer'])->group(function () {
     Route::get('/me', [CustomerAuthController::class, 'me']);
+    Route::put('/update-profile', [CustomerAuthController::class, 'updateProfile']);
 });

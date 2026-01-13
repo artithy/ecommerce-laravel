@@ -99,4 +99,23 @@ class CustomerAuthController extends Controller
             'customer' => $customer,
         ]);
     }
+
+    public function updateProfile(Request $request)
+    {
+        $auth = $request->attributes->get('auth_user');
+        $customer = Customer::find($auth['id']);
+        if (!$customer) {
+            return response()->json([
+                'message' => 'Customer not found',
+            ]);
+        }
+        $customer->update($request->only([
+            'name',
+            'phone'
+        ]));
+        return response()->json([
+            'message' => 'profile updated successfully',
+            'customer' => $customer,
+        ]);
+    }
 }
