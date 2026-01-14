@@ -44,4 +44,42 @@ class AdminController extends Controller
             'token' => $token,
         ]);
     }
+
+    public function login(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required|min:6',
+        ]);
+
+        $admin = Admin::where('email', $request->email)->first();
+
+        if (!$admin) {
+            return response()->json([
+                'message' => 'Email doesnot exist'
+            ]);
+        }
+
+        if (!Hash::check($request->password, $admin->password)) {
+            return response([
+                'message' => ' password is incorrect'
+            ]);
+        }
+
+        $payload = [
+            'id' => $admin->id,
+            'email' => $admin->email,
+            'role' => 'admin',
+            'iat' => time(),
+            'exp' => time() + 3600,
+        ];
+
+        $token = JWT::encode($payload, env('SECRET_KEY'), 'HS256');
+
+        return response()->json([
+            'message' => 'Login successfully',
+            'admin' => $admin,
+            'token' => $token
+        ]);
+    }
 }
