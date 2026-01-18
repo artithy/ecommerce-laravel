@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CustomerAuthController;
 use App\Http\Controllers\ProductController;
@@ -24,6 +25,11 @@ Route::get('/products-by-category', [ProductController::class, 'getProductsByCat
 Route::middleware(['auth.jwt', 'role:customer'])->group(function () {
     Route::get('/me', [CustomerAuthController::class, 'me']);
     Route::put('/update-profile', [CustomerAuthController::class, 'updateProfile']);
+
+    Route::get('/cart', [CartController::class, 'getCart']);
+    Route::post('/add/cart', [CartController::class, 'addToCart']);
+    Route::put('/cart/update/{id}', [CartController::class, 'updateCart']);
+    Route::delete('/cart/delete/{id}', [CartController::class, 'deleteCart']);
 });
 Route::middleware(['auth.jwt', 'role:admin'])->group(function () {
     Route::post('/admin/categories', [CategoryController::class, 'addCategory']);
