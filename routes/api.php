@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CustomerAuthController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -30,6 +31,8 @@ Route::middleware(['auth.jwt', 'role:customer'])->group(function () {
     Route::post('/add/cart', [CartController::class, 'addToCart']);
     Route::put('/cart/update/{id}', [CartController::class, 'updateCart']);
     Route::delete('/cart/delete/{id}', [CartController::class, 'deleteCart']);
+
+    Route::get('/orders', [OrderController::class, 'getCustomerOrders']);
 });
 Route::middleware(['auth.jwt', 'role:admin'])->group(function () {
     Route::post('/admin/categories', [CategoryController::class, 'addCategory']);
@@ -39,4 +42,8 @@ Route::middleware(['auth.jwt', 'role:admin'])->group(function () {
     Route::post('/admin/products', [ProductController::class, 'createProduct']);
     Route::put('/admin/products/{id}', [ProductController::class, 'updateProduct']);
     Route::delete('/admin/products/{id}', [ProductController::class, 'deleteProduct']);
+
+    Route::get('/admin/order', [OrderController::class, 'getAllOrder']);
+    Route::put('/admin/orders/{id}/status', [OrderController::class, 'updateOrderStatus']);
+    Route::get('/admin/orders/recent', [OrderController::class, 'getRecentOrders']);
 });
