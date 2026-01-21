@@ -33,6 +33,7 @@ Route::middleware(['auth.jwt', 'role:customer'])->group(function () {
     Route::delete('/cart/delete/{id}', [CartController::class, 'deleteCart']);
 
     Route::get('/orders', [OrderController::class, 'getCustomerOrders']);
+    Route::post('/order/place', [OrderController::class, 'placeOrder']);
 });
 Route::middleware(['auth.jwt', 'role:admin'])->group(function () {
     Route::post('/admin/categories', [CategoryController::class, 'addCategory']);
