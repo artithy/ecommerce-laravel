@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\cart;
-use App\Models\order;
+use App\Models\Cart;
+use App\Models\Order;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
