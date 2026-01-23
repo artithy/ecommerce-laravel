@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\adminDashboardController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CustomerAuthController;
@@ -47,4 +48,8 @@ Route::middleware(['auth.jwt', 'role:admin'])->group(function () {
     Route::get('/admin/order', [OrderController::class, 'getAllOrder']);
     Route::put('/admin/orders/{id}/status', [OrderController::class, 'updateOrderStatus']);
     Route::get('/admin/orders/recent', [OrderController::class, 'getRecentOrders']);
+
+    Route::get('/admin/dashboard/boxes', [adminDashboardController::class, 'boxesData']);
+    Route::get('/admin/dashboard/chart-today', [adminDashboardController::class, 'todayOrdersChart']);
+    Route::get('/admin/dashboard/chart-last-7-days', [adminDashboardController::class, 'last7DaysChart']);
 });
