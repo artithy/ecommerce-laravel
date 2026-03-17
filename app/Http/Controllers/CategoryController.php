@@ -10,7 +10,7 @@ class CategoryController extends Controller
     public function getCategories()
     {
         return response()->json([
-            'Categories' => Category::all()
+            'categories' => Category::all()
         ]);
     }
     public function addCategory(Request $request)
@@ -23,13 +23,16 @@ class CategoryController extends Controller
         ]);
         return response()->json([
             'message' => 'Category Created Successfully',
-            'Category' => $category
+            'category' => $category
         ]);
     }
 
     public function updateCategory(Request $request, $id)
     {
         $category = Category::find($id);
+        $request->validate([
+            'name' => 'required|string'
+        ]);
         if (!$category) {
             return response([
                 'message' => 'Category not found'
@@ -40,7 +43,7 @@ class CategoryController extends Controller
         ]);
         return response()->json([
             'message' => 'Category updated',
-            'Category' => $category
+            'category' => $category
         ]);
     }
 
