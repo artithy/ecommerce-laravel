@@ -16,7 +16,7 @@ class ProductController extends Controller
             'price' => 'required|numeric',
             'discount_price' => 'required|numeric',
             'image' => 'nullable|string',
-            'category_id' => 'nullable|boolean',
+            'category_id' => 'required|integer',
         ]);
 
         $product = Product::create([
@@ -49,6 +49,10 @@ class ProductController extends Controller
                 'product not found'
             ], 404);
         }
+
+        return response()->json([
+            'product' => $product
+        ]);
     }
     public function getProductsByCategory(Request $request)
     {

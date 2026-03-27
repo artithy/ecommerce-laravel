@@ -57,13 +57,13 @@ class AdminController extends Controller
         if (!$admin) {
             return response()->json([
                 'message' => 'Email doesnot exist'
-            ]);
+            ], 404);
         }
 
         if (!Hash::check($request->password, $admin->password)) {
-            return response([
+            return response()->json([
                 'message' => ' password is incorrect'
-            ]);
+            ], 401);
         }
 
         $payload = [
