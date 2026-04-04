@@ -37,8 +37,15 @@ class ProductController extends Controller
 
     public function getAllProducts(Request $request)
     {
-        $products = Product::all();
-        return response()->json($products);
+        $query = Product::query();
+        if ($request->has('category')) {
+            $query->where('category_id', $request->category);
+        }
+
+        $products = $query->get();
+        return response()->json([
+            'products' => $products
+        ]);
     }
 
     public function getSingleProduct($id)

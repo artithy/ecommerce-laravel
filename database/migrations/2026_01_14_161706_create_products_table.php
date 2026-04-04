@@ -17,7 +17,7 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->decimal('price', 10, 2);
             $table->decimal('discount_price', 10, 2);
-            $table->string('image')->nullable();
+            $table->longText('image')->nullable();
             $table->integer('category_id');
             $table->boolean('status')->default(true);
             $table->timestamps();
